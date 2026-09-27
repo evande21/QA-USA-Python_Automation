@@ -32,7 +32,7 @@ class UrbanRoutesPage:
     PAYMENT_METHOD_TEXT = (By.CLASS_NAME, "pp-value-text")
     ICE_CREAM_COUNTER = (By.XPATH, '//div[contains(text(), "Ice cream")]/ancestor::div//div[contains(@class, "counter-value")]')
     ORDER_MODAL_SHOWN = (By.CLASS_NAME, "order-body")
-
+    GET_PHONE_NUMBER = (By.XPATH, "//div[@class='np-button filled']//div[@class='np-text']")
 
     def __init__(self, driver):
         self.driver = driver
@@ -69,11 +69,10 @@ class UrbanRoutesPage:
         self.driver.find_element(*self.CVV_CODE).send_keys(cvv_code)
 
     def click_link_card(self):
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//button[contains(text(), "Link")]'))).click()
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.LINK_CARD)).click()
 
     def click_close_payment_method(self):
-        WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self.CLOSE_PAYMENT_METHOD)).click()
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.CLOSE_PAYMENT_METHOD)).click()
 
     def click_phone_number(self):
         self.driver.find_element(*self.CLICK_PHONE_NUMBER).click()
@@ -124,7 +123,7 @@ class UrbanRoutesPage:
         return self.driver.find_element(*self.ACTIVE_PLAN).text
 
     def get_phone_number(self):
-        return self.driver.find_element(*self.ENTER_PHONE_NUMBER).get_attribute("value")
+        return self.driver.find_element(*self.GET_PHONE_NUMBER).text
 
     def shift_focus_from_cvv(self):
         self.driver.find_element(*self.CVV_CODE).send_keys(Keys.TAB)
